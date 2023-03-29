@@ -10,7 +10,8 @@ container.insertAdjacentHTML("beforeend", markup);
 console.log(container);
 
 function createMarkup(items) { 
-    return items.map(({ preview,original,description }) => {
+    return items
+        .map(({ preview, original, description }) => {
         return
         ` <div class="gallery__item">
             <a class="gallery__link" href="${original}">
