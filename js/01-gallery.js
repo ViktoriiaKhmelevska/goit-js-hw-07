@@ -1,19 +1,14 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-
-const container = document.querySelector(`.gallery`);
+const container = document.querySelector('.gallery');
 
 const markup = createMarkup(galleryItems);
 
-container.insertAdjacentHTML("beforeend", markup);
-
-console.log(container);
+container.insertAdjacentHTML('beforeend', markup);
 
 function createMarkup(items) { 
-    return items
-        .map(({ preview, original, description }) => {
-        return
-        ` <div class="gallery__item">
+    return items.map(({ preview, original, description }) => {
+        return `<li class="gallery__item">
             <a class="gallery__link" href="${original}">
                 <img
                     class="gallery__image"
@@ -22,19 +17,35 @@ function createMarkup(items) {
                     alt="${description}"
                 />
             </a>
-        </div>`;
+        </li>`;
     }).join('');
 };
 
-container.addEventListener(`click`, onClick);
+container.addEventListener('click', onClick);
 
 function onClick(event) {
-    if (!event.target.classList.contains(`.gallery__item`)) {
+    event.preventDefault();
+
+    if (event.target.classList.contains('.gallery__image')) {
+            console.log(event.target.classList);
          return;
     }
- };
 
-// const instance = basicLightbox.create(`
-//     <h1>Dynamic Content</h1>
-//     <p>You can set the content of the lightbox with JS.</p>
-// `)
+    const currentItem = event.target.closest('.gallery__image');
+    const itemId = currentItem.dataset.source;
+    console.log(itemId);
+  const data = galleryItems.find(({ original }) => original === itemId);
+const instance = basicLightbox.create(`
+    <div class="gallery__item">
+            <a class="gallery__link" href="${data.original}">
+                <img
+                    class="gallery__image"
+                    src="${data.original}"
+                    data-source="${data.original}"
+                    alt="${data.description}"
+                />
+            </a>
+        </div>
+`);
+  instance.show();
+  };
