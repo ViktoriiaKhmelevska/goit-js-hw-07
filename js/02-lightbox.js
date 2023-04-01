@@ -3,11 +3,6 @@ import { galleryItems } from './gallery-items.js';
 
 console.log(galleryItems);
 
-{/* <li class="gallery__item">
-   <a class="gallery__link" href="large-image.jpg">
-      <img class="gallery__image" src="small-image.jpg" alt="Image description" />
-   </a>
-</li> */}
 const container = document.querySelector('.gallery');
 
 const markup = createMarkup(galleryItems);
@@ -21,10 +16,19 @@ function createMarkup(items) {
                 <img
                     class="gallery__image"
                     src="${preview}"
-                    data-source="${original}"
                     alt="${description}"
                 />
             </a>
         </li>`
     ).join('');
 };
+
+var lightbox = new SimpleLightbox('.gallery a', { 
+    captionsData: 'alt',
+    captionPosition: 'bottom',
+    captionDelay: 250,
+    closeText: '×',
+    widthRatio: 0.8,
+    heightRatio: 0.8,
+});
+lightbox.open();
