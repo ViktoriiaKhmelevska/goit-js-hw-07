@@ -7,8 +7,8 @@ const markup = createMarkup(galleryItems);
 container.insertAdjacentHTML('beforeend', markup);
 
 function createMarkup(items) { 
-    return items.map(({ preview, original, description }) => {
-        return `<li class="gallery__item">
+    return items.map(({ preview, original, description }) => 
+         `<li class="gallery__item">
             <a class="gallery__link" href="${original}">
                 <img
                     class="gallery__image"
@@ -17,8 +17,8 @@ function createMarkup(items) {
                     alt="${description}"
                 />
             </a>
-        </li>`;
-    }).join('');
+        </li>`
+    ).join('');
 };
 
 container.addEventListener('click', onClick);
@@ -26,14 +26,11 @@ container.addEventListener('click', onClick);
 function onClick(event) {
     event.preventDefault();
 
-    if (event.target.classList.contains('.gallery__image')) {
-            console.log(event.target.classList);
+    if (!(event.target.classList.contains('gallery__image'))) {
          return;
     }
-
     const currentItem = event.target.closest('.gallery__image');
     const itemId = currentItem.dataset.source;
-    console.log(itemId);
   const data = galleryItems.find(({ original }) => original === itemId);
 const instance = basicLightbox.create(`
     <div class="gallery__item">
@@ -45,7 +42,20 @@ const instance = basicLightbox.create(`
                     alt="${data.description}"
                 />
             </a>
-        </div>
-`);
-  instance.show();
+        </div>`, {
+    className: 'modal',
+    onShow: () => window.addEventListener("keydown", closeByEsc),
+    onClose: () => window.removeEventListener("keydown", closeByEsc),
+        });
+    instance.show();
+
+    function closeByEsc(ev) {
+         if (ev.code === "Escape") {
+            instance.close();
+        };
+    };
+	setTimeout(() => {
+	instance.close((instance) => console.log('finished close()', instance))
+			}, 5000)
   };
+
