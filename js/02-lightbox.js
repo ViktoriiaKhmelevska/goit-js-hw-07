@@ -31,4 +31,3 @@ var lightbox = new SimpleLightbox('.gallery a', {
     widthRatio: 0.8,
     heightRatio: 0.8,
 });
-lightbox.open();

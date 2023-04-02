@@ -29,19 +29,16 @@ function onClick(event) {
     if (!(event.target.classList.contains('gallery__image'))) {
          return;
     }
-    const currentItem = event.target.closest('.gallery__image');
-    const itemId = currentItem.dataset.source;
+    const itemId = event.target.dataset.source;
   const data = galleryItems.find(({ original }) => original === itemId);
 const instance = basicLightbox.create(`
     <div class="gallery__item">
-            <a class="gallery__link" href="${data.original}">
-                <img
+                    <img
                     class="gallery__image"
                     src="${data.original}"
                     data-source="${data.original}"
                     alt="${data.description}"
                 />
-            </a>
         </div>`, {
     className: 'modal',
     onShow: () => window.addEventListener("keydown", closeByEsc),
