@@ -30,29 +30,25 @@ function onClick(event) {
          return;
     }
     const itemId = event.target.dataset.source;
-  const data = galleryItems.find(({ original }) => original === itemId);
-const instance = basicLightbox.create(`
-    <div class="gallery__item">
+
+    const instance = basicLightbox.create(`
+                    <div class="gallery__item">
                     <img
                     class="gallery__image"
-                    src="${data.original}"
-                    data-source="${data.original}"
-                    alt="${data.description}"
-                />
-        </div>`, {
+                    src="${itemId}"
+                    alt="${galleryItems.description}"
+                    />
+                    </div>`, {
     className: 'modal',
     onShow: () => window.addEventListener("keydown", closeByEsc),
     onClose: () => window.removeEventListener("keydown", closeByEsc),
         });
     instance.show();
-
+   
     function closeByEsc(ev) {
          if (ev.code === "Escape") {
-            instance.close();
-        };
+             instance.close();
+           } 
     };
-	setTimeout(() => {
-	instance.close((instance) => console.log('finished close()', instance))
-			}, 5000)
-  };
+	};
 
